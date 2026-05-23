@@ -1,13 +1,15 @@
 ﻿__pycache__/
 *.pyc
 .env
+.env.*
+!.env.example
 .venv/
 venv/
-.env.local
 *.log
 *.sqlite
 *.db
 datasets/private/
 datasets/raw/
 notebooks/.ipynb_checkpoints/
+_backup_*/
 .DS_Store

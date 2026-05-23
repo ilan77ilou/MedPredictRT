@@ -1,125 +1,124 @@
-MedPredictRT — Plateforme de prédiction médicale en temps réel
-Présentation
+﻿# MedPredictRT
 
-MedPredictRT est une plateforme de machine learning conçue pour analyser des données médicales en temps réel et prédire les risques critiques chez les patients avant l’apparition de symptômes visibles.
+Prototype d'API de prédiction médicale en temps réel.
 
-Le projet combine :
+## Objectif
 
-Deep Learning
-Analyse de séries temporelles
-Traitement de flux de données temps réel
-Intelligence artificielle appliquée à la santé
+MedPredictRT est un projet personnel de démonstration autour de l'intelligence artificielle appliquée à la santé.
 
-Le système traite plusieurs types de signaux médicaux :
+Le projet montre comment structurer une API capable de recevoir des constantes patient simulées, calculer un score de risque et retourner une réponse exploitable par un futur tableau de bord.
 
-Fréquence cardiaque
-Tension artérielle
-Saturation en oxygène
-Signaux ECG
-Fréquence respiratoire
-Historique médical du patient
+Ce projet n'est pas un dispositif médical certifié. Il ne doit pas être utilisé pour prendre une décision médicale réelle.
 
-afin de générer des prédictions instantanées et d’alerter le personnel médical.
+## Fonctionnalités actuelles
 
-Fonctionnalités
-Surveillance des patients en temps réel
-Moteur de prédiction basé sur le Deep Learning
-API d’inférence faible latence
-Tableau de bord de monitoring
-Système d’alertes intelligentes
-Architecture compatible avec les services de réanimation et d’urgence
-Déploiement conteneurisé avec Docker
-Pipeline sécurisé pour les données médicales
-Architecture du système
-Capteurs médicaux
-       ↓
-Pipeline de streaming Kafka
-       ↓
-Moteur d’extraction de features
-       ↓
-Modèle LSTM / Transformer
-       ↓
-API de prédiction
-       ↓
-Dashboard et système d’alertes
-Stack Machine Learning
-Modèles utilisés
-LSTM Networks
-Transformers temporels
-XGBoost pour les modèles de référence
-Ensemble Learning
-Techniques
-Prévision de séries temporelles
-Prétraitement des signaux médicaux
-Feature engineering
-Inférence en ligne
-Détection d’anomalies
-Objectifs de prédiction
+- API FastAPI
+- endpoint de santé `/`
+- endpoint de prédiction `/predict`
+- validation des données avec Pydantic
+- scoring déterministe de démonstration
+- séparation entre API et logique de modèle
+- structure prête pour entraînement, streaming, dashboard et tests
 
-Le modèle est capable d’estimer :
+## Données utilisées
 
-Le risque d’arrêt cardiaque
-La probabilité de septicémie
-Les risques d’insuffisance respiratoire
-Le besoin de transfert en soins intensifs
-Le score de dégradation du patient
-Technologies utilisées
-Domaine	Technologie
-Backend	FastAPI
-Machine Learning	PyTorch
-Streaming	Apache Kafka
-Base de données	PostgreSQL
-Déploiement	Docker / Kubernetes
-Monitoring	Prometheus / Grafana
-Frontend	React
-Structure du projet
-MedPredictRT/
-│
-├── api/
-├── models/
-├── training/
-├── streaming/
-├── dashboard/
-├── datasets/
-├── notebooks/
-├── docker/
-├── tests/
-└── README.md
-Installation
-git clone https://github.com/ilou/MedPredictRT.git
+Le projet utilise uniquement des données simulées.
 
+Aucune donnée patient réelle n'est stockée dans ce dépôt.
+
+## Architecture cible
+
+```text
+Données patient simulées
+        ↓
+API FastAPI
+        ↓
+Prétraitement
+        ↓
+Moteur de scoring
+        ↓
+Réponse JSON
+        ↓
+Dashboard / alertes
+```
+
+## Stack
+
+| Domaine | Technologie |
+|---|---|
+| Backend | FastAPI |
+| Validation | Pydantic |
+| Modèle démonstrateur | Python |
+| Données | NumPy / Pandas |
+| Machine Learning cible | scikit-learn / PyTorch |
+| Déploiement cible | Docker |
+
+## Installation
+
+```bash
+git clone https://github.com/ilan77ilou/MedPredictRT.git
 cd MedPredictRT
-
 pip install -r requirements.txt
-Lancement de l’API
-uvicorn api.main:app --reload
-Exemple de réponse API
+```
+
+## Lancement
+
+```bash
+python -m uvicorn api.main:app --reload
+```
+
+Documentation API :
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+## Exemple de requête
+
+```bash
+curl -X POST http://127.0.0.1:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "patient_id": "demo-001",
+    "heart_rate": 112,
+    "oxygen_level": 92,
+    "respiratory_rate": 24,
+    "blood_pressure": 145
+  }'
+```
+
+## Exemple de réponse
+
+```json
 {
-  "patient_id": "A-4821",
-  "risk_score": 0.91,
-  "predicted_condition": "High Sepsis Risk",
-  "confidence": "97.2%"
+  "patient_id": "demo-001",
+  "risk_score": 0.47,
+  "risk_level": "moderate",
+  "detected_factors": [
+    "elevated_heart_rate",
+    "low_oxygen_level",
+    "elevated_respiratory_rate",
+    "elevated_blood_pressure"
+  ],
+  "model_type": "deterministic_demo_scoring"
 }
-Objectifs du projet
+```
 
-Ce projet explore l’utilisation de l’intelligence artificielle pour :
+## Roadmap
 
-Détecter précocement certaines pathologies
-Réduire le temps de réaction hospitalier
-Optimiser les ressources en soins intensifs
-Développer des systèmes médicaux prédictifs
-Améliorations futures
-Support du Federated Learning
-Déploiement Edge AI
-Optimisation par Reinforcement Learning
-Intégration avec des objets connectés médicaux
-Entraînement distribué multi-hôpitaux
-Auteur
+- ajouter des tests unitaires
+- ajouter Docker
+- ajouter un dashboard simple
+- créer un jeu de données synthétiques
+- remplacer le scoring de démonstration par un modèle entraîné
+- ajouter une simulation de flux temps réel
 
-Développé par ilou
+## Auteur
 
-Projet personnel de recherche et développement en intelligence artificielle appliquée à la santé.
+Développé par Ilan Assaraf.
 
-Licence
+Projet personnel de démonstration IA / backend / santé numérique.
 
-MIT License
+## Licence
+
+MIT
